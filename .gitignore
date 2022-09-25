@@ -1,0 +1,6 @@
+venv/
+*.pyc
+wandb/
+saved_weights/
+__pycache__/
+.ipynb_checkpoints/
