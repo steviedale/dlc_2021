@@ -8,7 +8,8 @@ from collections import Counter
 from tqdm import tqdm
 import os
 
-from model import Model
+from dlc_2021.neural_network.model_large import ModelLarge
+from dlc_2021.neural_network.model_small import ModelSmall
 
 
 def color_conversion(x):
@@ -24,6 +25,7 @@ BATCH_SIZE = 32
 PATCH_SIZE = 96
 STRIDE = 96
 LR = 1e-7
+MODEL = ModelSmall
 
 
 # wandb.init(project="coulotte", entity="steviedale")
@@ -98,7 +100,7 @@ class_weights_valid = {class_id : max_val/num_images for class_id, num_images in
 print(class_weights_valid)
 
 ### Load Model
-model = Model.create_model(input_shape=(96, 96, 3), num_classes=2, activation="selu")
+model = MODEL.create_model(input_shape=(96, 96, 3), num_classes=2, activation="selu")
 model.compile(loss="categorical_crossentropy", optimizer=tf.keras.optimizers.Adam(learning_rate=LR), metrics=["accuracy", "AUC"])
 model.summary()
 
